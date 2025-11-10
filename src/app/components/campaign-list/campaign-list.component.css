@@ -1,0 +1,57 @@
+.campaign-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.header h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.campaign-table {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.campaign-table thead {
+  background: #0ea5e9;
+  color: white;
+}
+
+.campaign-table tbody tr:hover {
+  background: #eefaff;
+}
+
+.loading-box {
+  text-align: center;
+  padding: 40px;
+}
+
+.pagination-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.page-btn {
+  padding: 6px 15px;
+  border-radius: 6px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-status {
+  font-weight: 600;
+}

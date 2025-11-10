@@ -1,0 +1,128 @@
+.campaign-container {
+  max-width: 750px;
+  margin: auto;
+  padding: 30px 10px;
+  font-family: 'Inter', sans-serif;
+}
+
+.title-bar h3 {
+  text-align: center;
+  font-weight: 600;
+  color: black;
+  margin-bottom: 25px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid #dbe9f3;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  backdrop-filter: blur(6px);
+}
+
+.instruction-box {
+  background: #e9f6ff;
+  border-left: 5px solid #0ea5e9;
+  padding: 15px 18px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+.instruction-box h5 { margin-bottom: 6px; color: #0077b6; }
+
+.label-heading {
+  font-weight: 600;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.input, .textarea {
+  width: 100%;
+  border: 1px solid #bddcf0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.25s;
+}
+.input:focus, .textarea:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.25);
+}
+
+.textarea {
+  height: 100px;
+  resize: none;
+}
+
+.upload-area {
+  border: 2px dashed #0ea5e9;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  background: #f8fcff;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+.file-name { color: green; font-weight: 600; }
+
+.delay-wrapper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.delay-wrapper input {
+  width: 70px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #bddcf0;
+}
+
+.btn-submit {
+  width: 100%;
+  margin-top: 25px;
+  padding: 12px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn-submit:hover { opacity: 0.85; }
+
+.message-box {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.message-success {
+  background: #d1f7d6;        /* Light Green */
+  color: #0b6b20;             /* Dark Green Text */
+  border-left: 5px solid #22c55e;
+  padding: 10px 14px;
+  border-radius: 6px;
+  animation: fadeOut 5s forwards;
+}
+
+.message-error {
+  background: #ffe1df;        /* Light Red */
+  color: #b3261e;             /* Dark Red Text */
+  border-left: 5px solid #e11d48;
+  padding: 10px 14px;
+  border-radius: 6px;
+  animation: fadeOut 5s forwards;
+}
+
+/* Smooth fade animation */
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+

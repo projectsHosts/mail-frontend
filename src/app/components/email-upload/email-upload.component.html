@@ -1,0 +1,58 @@
+<div class="campaign-container">
+
+  <div class="title-bar">
+    <h3>Create New Email Campaign</h3>
+  </div>
+
+  <div class="glass-card">
+
+    <div class="instruction-box">
+      <h5>Before You Start</h5>
+      <ul>
+        <li>Upload Excel file containing email list</li>
+        <li>First column = Email, Second column = Name (optional)</li>
+        <li>Use delay to reduce spam detection</li>
+        <li>First row must be header</li>
+      </ul>
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+
+      <!-- File Upload Box -->
+      <label class="label-heading">Email List File</label>
+      <div class="upload-area">
+        <input type="file" accept=".xlsx,.xls" (change)="onFileSelected($event)">
+        <p *ngIf="!formData.file">Click to upload or drop Excel file here</p>
+
+        <p *ngIf="formData.file" class="file-name">
+          ✅ {{ formData.file.name }} uploaded
+        </p>
+      </div>
+
+      <label class="label-heading">Campaign Title</label>
+      <input class="input" type="text" [(ngModel)]="formData.name" name="name" placeholder="Example: College Event Invitation" required>
+
+      <label class="label-heading">Email Subject</label>
+      <input class="input" type="text" [(ngModel)]="formData.subject" name="subject" placeholder="Your Email Subject" required>
+
+      <label class="label-heading">Message Body</label>
+      <textarea class="textarea" [(ngModel)]="formData.body" name="body" placeholder="Write your email message..." required></textarea>
+
+      <!-- Delay Control -->
+      <div class="delay-wrapper">
+        <span>Delay per Email</span>
+        <input type="number" [(ngModel)]="formData.delaySeconds" name="delaySeconds" min="0" max="60">
+        <span>seconds</span>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="uploading">
+        {{ uploading ? 'Processing...' : 'Create Campaign' }}
+      </button>
+
+      <div *ngIf="message" [class]="messageClass" class="message-box">
+        {{ message }}
+      </div>
+
+    </form>
+  </div>
+</div>

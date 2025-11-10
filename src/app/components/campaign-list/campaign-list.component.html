@@ -1,0 +1,49 @@
+<div class="campaign-container">
+
+  <div class="header">
+    <h3>Email Campaigns</h3>
+  </div>
+
+  <div *ngIf="loading" class="loading-box">
+    <div class="spinner-border text-info"></div>
+  </div>
+
+  <table *ngIf="!loading" class="table table-hover campaign-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Subject</th>
+        <th>Delay</th>
+        <th>Created</th>
+        <th style="text-align:right;">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let campaign of paginatedCampaigns">
+        <td>{{ campaign.name }}</td>
+        <td>{{ campaign.subject }}</td>
+        <td>{{ campaign.delaySeconds }}s</td>
+        <td>{{ campaign.createdAt | date:'short' }}</td>
+        <td style="text-align:right;">
+          <button class="btn btn-sm btn-outline-primary" (click)="viewCampaign.emit(campaign.id)">View</button>
+
+          <button class="btn btn-sm btn-success ms-2"
+                  (click)="confirmSend(campaign.id)"
+                  [disabled]="sendingCampaignId === campaign.id">
+            <span *ngIf="sendingCampaignId === campaign.id" class="spinner-border spinner-border-sm me-1"></span>
+            Send
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="pagination-box" *ngIf="campaigns.length > pageSize">
+    <button class="page-btn" (click)="prevPage()" [disabled]="pageIndex === 0">Prev</button>
+    <span class="page-status">{{ pageIndex+1 }} / {{ totalPages }}</span>
+    <button class="page-btn" (click)="nextPage()" [disabled]="pageIndex === totalPages - 1">Next</button>
+  </div>
+
+</div>
