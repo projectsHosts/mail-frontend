@@ -26,6 +26,7 @@ export class EmailUploadComponent {
   message = '';
   messageClass = '';
   showTemplates = false;
+  attachmentFile: File | null = null;
 
     templates = [
   {
@@ -76,6 +77,16 @@ export class EmailUploadComponent {
 } else {
   // optional: handle case jab userEmail null ho
   console.warn('User email not found, not sending getCreatedBy');
+}
+
+// IMPORTANT: append attachment only if present
+if (this.attachmentFile) {
+  formData.append('attachment', this.attachmentFile, this.attachmentFile.name);
+}
+
+// DEBUG: log FormData entries
+for (const pair of (formData as any).entries()) {
+  console.log('FormData:', pair[0], pair[1]);
 }
 
     // formData.append('getCreatedBy', this.auth.getUserEmail()?? '');
@@ -151,5 +162,43 @@ export class EmailUploadComponent {
 //   removeFile(): void {
 //   this.formData.file = null;
 // }
+
+
+// new handler
+onAttachmentSelected(event: any): void {
+  const f = event.target.files?.[0];
+  if (!f) {
+    this.attachmentFile = null;
+    return;
+  }
+// validate size (<= 5MB) and type
+  const allowed = ['application/pdf', 'application/msword',
+                   'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  const maxSize = 5 * 1024 * 1024;
+
+  if (f.size > maxSize) {
+    this.showMessage('Attachment too large. Max 5 MB allowed', 'alert-danger');
+    (event.target as HTMLInputElement).value = '';
+    return;
+  }
+
+  // sometimes mime-type may be missing, but we'll still accept common extensions
+  const name = f.name.toLowerCase();
+  const extOk = name.endsWith('.pdf') || name.endsWith('.doc') || name.endsWith('.docx');
+  if (!allowed.includes(f.type) && !extOk) {
+    this.showMessage('Only PDF / DOC / DOCX allowed for attachment', 'alert-danger');
+    (event.target as HTMLInputElement).value = '';
+    return;
+  }
+
+  this.attachmentFile = f;
+}
+
+removeAttachment(): void {
+  this.attachmentFile = null;
+  const el = document.getElementById('attachInput') as HTMLInputElement | null;
+  if (el) el.value = '';
+}
+
 
 }

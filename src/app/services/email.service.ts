@@ -17,10 +17,18 @@ export class EmailService {
     return this.http.post(`${this.apiUrl}/email/upload`, formData);
   }
 
+  getCampaigns(email: string): Observable<Campaign[]> {
+  return this.http.get<Campaign[]>(`${this.apiUrl}/email/campaigns?email=${encodeURIComponent(email)}`);
+}
+
   // Get all campaigns
-  getCampaigns(): Observable<Campaign[]> {
-    return this.http.get<Campaign[]>(`${this.apiUrl}/email/campaigns`);
-  }
+  // getCampaigns(email?: string): Observable<Campaign[]> {
+  //   const url = email
+  //   ? `${this.apiUrl}/email/campaigns?email=${encodeURIComponent(email)}`
+  //   : `${this.apiUrl}/email/campaigns`;
+  // return this.http.get<Campaign[]>(url);
+    // return this.http.get<Campaign[]>(`${this.apiUrl}/email/campaigns`);
+  // }
 
   // Get campaign by ID
   getCampaign(campaignId: number): Observable<Campaign> {

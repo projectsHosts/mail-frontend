@@ -43,6 +43,10 @@ export class LoginComponent {
         this.loading = false;
         if (res && res.jwt) {
           this.auth.login(res);
+          // <-- ADDED: save user email so AppComponent can read it
+        if (res.email) {
+          localStorage.setItem('userEmail', res.email);
+        }
           this.router.navigate(['/dashboard']);
         } else {
           this.errorMessage = "Invalid credentials. Please try again.";

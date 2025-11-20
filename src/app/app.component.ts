@@ -18,6 +18,8 @@ import { filter } from 'rxjs';
 export class AppComponent {
   selectedCampaignId: number | null = null;
   refreshTrigger = 0;
+  currentUserEmail: string = '';
+
 
 // ✅ login/signup routes ke liye flag
   isAuthRoute = false;
@@ -57,5 +59,13 @@ export class AppComponent {
   backToCampaigns(): void {
     this.selectedCampaignId = null;
     this.refreshTrigger++;
+  }
+
+  
+goToCampaigns() {
+    this.selectedCampaignId = null;
+    this.router.navigate(['/dashboard']).then(() => {
+      this.refreshTrigger++;
+    });
   }
 }

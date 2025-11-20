@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges,SimpleChanges} from '@angular/core';
 import { EmailService } from '../../services/email.service';
 import { Campaign } from '../../models/campaign.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-campaign-list',
@@ -14,6 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class CampaignListComponent implements OnChanges {
   @Input() refreshTrigger = 0;
+  @Input() userEmail: string = '';
   @Output() viewCampaign = new EventEmitter<number>();
   
   
@@ -27,20 +29,35 @@ export class CampaignListComponent implements OnChanges {
   pageIndex = 0;
   totalPages = 0;
 
-  constructor(private emailService: EmailService) {}
+  constructor(private emailService: EmailService, private auth: AuthService) {}
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.loadCampaigns();
+  }
+
+  private resolveEmail(): string | null {
+    // Prefer @Input userEmail, fallback to AuthService (localStorage)
+    const fromInput = (this.userEmail || '').trim();
+    if (fromInput) return fromInput;
+    const fromAuth = this.auth.getUserEmail();
+    return fromAuth ? fromAuth : null;
   }
 
   loadCampaigns(): void {
     this.loading = true;
-    this.emailService.getCampaigns().subscribe({
+    const emailToUse = this.resolveEmail();
+
+    this.emailService.getCampaigns(emailToUse!).subscribe({
       next: (campaigns) => {
         this.campaigns = campaigns.sort((a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
+        this.pageIndex = 0;
         this.updatePagination();
+        this.loading = false;
+      },
+       error: (err) => {
+        console.error('Failed to load campaigns', err);
         this.loading = false;
       }
     });

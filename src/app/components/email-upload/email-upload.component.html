@@ -69,6 +69,20 @@
   </div>
 </div>
 
+<!-- Attachment (Resume / PDF) -->
+<label class="label-heading">Attach Resume / PDF (optional)</label>
+<div class="upload-area small-upload">
+  <input id="attachInput" #attachInput type="file" accept=".pdf,.doc,.docx" (change)="onAttachmentSelected($event)">
+  <p *ngIf="!attachmentFile">No file attached</p>
+
+  <p *ngIf="attachmentFile" class="file-name">
+    ✅ {{ attachmentFile.name }} ({{ (attachmentFile.size/1024/1024) | number:'1.1-2' }} MB)
+    <button type="button" class="btn-clear" (click)="removeAttachment()">Remove</button>
+  </p>
+</div>
+
+
+
 
       <!-- Delay Control -->
       <div class="delay-wrapper">

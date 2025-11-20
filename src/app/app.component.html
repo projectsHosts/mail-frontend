@@ -7,7 +7,7 @@
 
   <div class="nav-center">
     <a routerLink="/dashboard" class="nav-link">Dashboard</a>
-    <a class="nav-link">Campaigns</a>
+    <a class="nav-link" (click)="goToCampaigns()">Campaigns</a>
     <a class="nav-link">Recipients</a>
   </div>
 
@@ -78,6 +78,7 @@
 
       <ng-template #campaignListView>
         <app-campaign-list
+          [userEmail]="currentUserEmail"
           [refreshTrigger]="refreshTrigger"
           (viewCampaign)="onViewCampaign($event)">
         </app-campaign-list>
