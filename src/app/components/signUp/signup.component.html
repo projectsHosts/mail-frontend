@@ -1,0 +1,136 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-icon">
+        <i class="bi bi-person-plus"></i>
+      </div>
+      <h2 class="auth-title">Create your account</h2>
+      <p class="auth-subtitle">Start managing your email campaigns in minutes.</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+      {{ errorMessage }}
+    </div>
+
+    <form #signupForm="ngForm" (ngSubmit)="signup(signupForm)" novalidate>
+
+      <!-- Name -->
+      <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="name"
+          #nameCtrl="ngModel"
+          required
+          minlength="3"
+          placeholder="Enter your full name"
+          [ngClass]="{'is-invalid': nameCtrl.invalid && (nameCtrl.dirty || nameCtrl.touched)}"
+        />
+
+        <div class="invalid-feedback" *ngIf="nameCtrl.errors && (nameCtrl.dirty || nameCtrl.touched)">
+          <span *ngIf="nameCtrl.errors['required']">Name is required.</span>
+          <span *ngIf="nameCtrl.errors['minlength']">Name must be at least 3 characters.</span>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          [(ngModel)]="email"
+          #emailCtrl="ngModel"
+          required
+          email
+          placeholder="you@example.com"
+          [ngClass]="{'is-invalid': emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)}"
+        />
+
+        <div class="invalid-feedback" *ngIf="emailCtrl.errors && (emailCtrl.dirty || emailCtrl.touched)">
+          <span *ngIf="emailCtrl.errors['required']">Email is required.</span>
+          <span *ngIf="emailCtrl.errors['email']">Enter a valid email address.</span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+       <input
+  type="password"
+  class="form-control"
+  name="password"
+  [(ngModel)]="password"
+  #passwordCtrl="ngModel"
+  required
+  minlength="8"
+  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+  placeholder="Create a strong password"
+  [ngClass]="{'is-invalid': passwordCtrl.invalid && (passwordCtrl.dirty || passwordCtrl.touched)}"
+/>
+
+
+        <div class="invalid-feedback" *ngIf="passwordCtrl.errors && (passwordCtrl.dirty || passwordCtrl.touched)">
+          <span *ngIf="passwordCtrl.errors['required']">Password is required.</span>
+          <span *ngIf="passwordCtrl.errors['minlength']">Minimum 8 characters required.</span>
+          <span *ngIf="passwordCtrl.errors['pattern']">
+            Must contain upper, lower case letters and a number.
+          </span>
+        </div>
+
+        <small class="text-muted d-block mt-1">
+          Password must be at least 8 characters and include 1 uppercase, 1 lowercase and 1 number.
+        </small>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="mb-4">
+        <label class="form-label">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          #confirmPasswordCtrl="ngModel"
+          required
+          placeholder="Re-enter your password"
+          [ngClass]="{
+            'is-invalid': 
+              (confirmPasswordCtrl.invalid && (confirmPasswordCtrl.dirty || confirmPasswordCtrl.touched))
+              || passwordMismatch
+          }"
+        />
+
+        <div class="invalid-feedback" *ngIf="confirmPasswordCtrl.errors && (confirmPasswordCtrl.dirty || confirmPasswordCtrl.touched)">
+          <span *ngIf="confirmPasswordCtrl.errors['required']">Confirm password is required.</span>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="passwordMismatch">
+          Password and confirm password do not match.
+        </div>
+      </div>
+
+      <button
+        class="btn btn-primary w-100 mb-3"
+        type="submit"
+        [disabled]="signupForm.invalid || loading"
+      >
+        <span *ngIf="!loading">Create Account</span>
+        <span *ngIf="loading">
+          <span class="spinner-border spinner-border-sm me-1"></span>
+          Creating account...
+        </span>
+      </button>
+
+      <p class="text-center mb-0 small">
+        Already have an account?
+        <a routerLink="/login" class="link-primary">Sign in</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+

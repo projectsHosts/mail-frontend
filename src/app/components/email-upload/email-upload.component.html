@@ -35,8 +35,40 @@
       <label class="label-heading">Email Subject</label>
       <input class="input" type="text" [(ngModel)]="formData.subject" name="subject" placeholder="Your Email Subject" required>
 
+      <!-- <label class="label-heading">Message Body</label>
+      <textarea class="textarea" [(ngModel)]="formData.body" name="body" placeholder="Write your email message..." required></textarea> -->
+      
       <label class="label-heading">Message Body</label>
-      <textarea class="textarea" [(ngModel)]="formData.body" name="body" placeholder="Write your email message..." required></textarea>
+
+<div class="message-body-wrapper">
+  <!-- TEXTAREA -->
+  <textarea
+    class="textarea"
+    [(ngModel)]="formData.body"
+    name="body"
+    placeholder="Write your email message..."
+    required>
+  </textarea>
+
+  <!-- ⭐ TEMPLATE BUTTON (top-right) -->
+  <button
+    type="button"
+    class="template-btn"
+    (click)="toggleTemplates()">
+    <i class="bi bi-stars"></i>
+  </button>
+
+  <!-- TEMPLATE LIST -->
+  <div class="template-dropdown" *ngIf="showTemplates">
+    <div
+      class="template-item"
+      *ngFor="let t of templates"
+      (click)="applyTemplate(t)">
+      {{ t.title }}
+    </div>
+  </div>
+</div>
+
 
       <!-- Delay Control -->
       <div class="delay-wrapper">

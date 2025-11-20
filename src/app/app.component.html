@@ -1,34 +1,71 @@
 <!-- Header -->
-<!-- Modern Navigation Bar -->
-<nav class="main-navbar">
+<nav class="main-navbar" *ngIf="!isAuthRoute">
   <div class="nav-left">
     <i class="bi bi-send-check nav-icon"></i>
     <span class="nav-title">Bulk Email Sender</span>
   </div>
 
   <div class="nav-center">
-    <a class="nav-link active">Dashboard</a>
+    <a routerLink="/dashboard" class="nav-link">Dashboard</a>
     <a class="nav-link">Campaigns</a>
     <a class="nav-link">Recipients</a>
   </div>
 
-  <div class="nav-right">
-    <span class="nav-tag">For Student Communication</span>
+  <!-- Not logged in -->
+  <div class="nav-right" *ngIf="!auth.isLoggedIn()">
+    <button routerLink="/login" class="btn btn-primary me-2">Sign In</button>
+    <button routerLink="/signup" class="btn btn-outline-primary">Sign Up</button>
+  </div>
+
+  <!-- Logged in -->
+  <div class="nav-right" *ngIf="auth.isLoggedIn()">
+    <div class="user-menu">
+      <button class="avatar-btn" type="button" (click)="toggleUserCard()">
+        <div class="avatar-circle">
+          {{ auth.getUserName()?.charAt(0) | uppercase }}
+        </div>
+      </button>
+
+      <div class="user-card shadow" *ngIf="showUserCard">
+        <div class="user-card-header">
+          <div class="avatar-circle avatar-lg mb-2">
+            {{ auth.getUserName()?.charAt(0) | uppercase }}
+          </div>
+
+          <div class="user-name">{{ auth.getUserName() }}</div>
+          <div class="user-email">{{ auth.getUserEmail() }}</div>
+          <div class="user-subtext">
+            Access all features of Bulk Email Sender
+          </div>
+        </div>
+
+        <div class="user-actions">
+          <button class="dropdown-item user-action" routerLink="/dashboard">
+            <i class="bi bi-speedometer2 me-2"></i>
+            Account Dashboard
+          </button>
+
+          <button class="dropdown-item user-action" (click)="logout()">
+            <i class="bi bi-box-arrow-right me-2"></i>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 
+<!-- 👇 YAHAN RAKHO, NAV KE BAAD -->
+<router-outlet></router-outlet>
 
-<!-- Main Content -->
-<div class="container my-4">
+<!-- Main Content (dashboard page ka extra layout) -->
+<div class="container my-4" *ngIf="!isAuthRoute">
   <div class="row">
-    <!-- Left Sidebar - Upload Form -->
     <div class="col-lg-4 mb-4">
       <app-email-upload (uploadSuccess)="onUploadSuccess()"></app-email-upload>
     </div>
 
-    <!-- Right Content Area -->
     <div class="col-lg-8">
-      <!-- Campaign Details View -->
       <div *ngIf="selectedCampaignId; else campaignListView">
         <div class="d-flex align-items-center mb-3">
           <button class="btn btn-outline-secondary me-3" (click)="backToCampaigns()">
@@ -39,9 +76,8 @@
         <app-recipient-list [campaignId]="selectedCampaignId"></app-recipient-list>
       </div>
 
-      <!-- Campaign List View -->
       <ng-template #campaignListView>
-        <app-campaign-list 
+        <app-campaign-list
           [refreshTrigger]="refreshTrigger"
           (viewCampaign)="onViewCampaign($event)">
         </app-campaign-list>

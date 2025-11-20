@@ -126,3 +126,154 @@
   100% { opacity: 0; }
 }
 
+
+/* Main Navbar */
+.main-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e4e4e4;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Left Section */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-icon {
+  font-size: 22px;
+  color: #007bff;
+}
+
+.nav-title {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/* Center Links */
+.nav-center {
+  display: flex;
+  gap: 22px;
+}
+
+.nav-link {
+  cursor: pointer;
+  font-size: 15px;
+  color: #444;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+}
+
+/* Right Section */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-tag {
+  background: #f1f7ff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #0066d6;
+}
+
+/* Dropdown */
+.dropdown .btn {
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+.dropdown-menu {
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: #0066ff;
+  border-color: #0066ff;
+}
+
+.btn-primary:hover {
+  background-color: #0054d6;
+}
+
+.btn-outline-primary {
+  border-color: #0066ff;
+  color: #0066ff;
+}
+
+.btn-outline-primary:hover {
+  background-color: #0066ff;
+  color: white;
+}
+
+
+.message-body-wrapper {
+  position: relative;
+}
+
+/* Textarea ko thoda right padding de do, taaki button andar overlap ho sake */
+.message-body-wrapper .textarea {
+  padding-right: 40px;
+}
+
+/* ⭐ Button in top-right corner of textarea */
+.template-btn {
+  position: absolute;
+  top: 8px;          /* textarea ke upper se */
+  right: 10px;       /* right corner */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #0ea5e9;
+  padding: 0;
+}
+
+.template-btn:hover {
+  color: #0369a1;
+  transform: scale(1.05);
+}
+
+/* Dropdown same reh sakta hai */
+.template-dropdown {
+  position: absolute;
+  right: 0;
+  top: 48px;         /* textarea ke niche */
+  width: 260px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+  z-index: 50;
+}
+
+.template-item {
+  padding: 9px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.template-item:last-child {
+  border-bottom: none;
+}
+
+.template-item:hover {
+  background: #f0f9ff;
+}

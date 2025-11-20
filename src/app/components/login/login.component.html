@@ -1,0 +1,78 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-icon">
+        <i class="bi bi-shield-lock"></i>
+      </div>
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-subtitle">Sign in to access your dashboard.</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+      {{ errorMessage }}
+    </div>
+
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" novalidate>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          [(ngModel)]="email"
+          #emailCtrl="ngModel"
+          required
+          email
+          placeholder="you@example.com"
+          [ngClass]="{'is-invalid': emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)}"
+        />
+
+        <div class="invalid-feedback" *ngIf="emailCtrl.errors && (emailCtrl.dirty || emailCtrl.touched)">
+          <span *ngIf="emailCtrl.errors['required']">Email is required.</span>
+          <span *ngIf="emailCtrl.errors['email']">Enter a valid email address.</span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="password"
+          #passwordCtrl="ngModel"
+          required
+          minlength="8"
+          placeholder="Enter your password"
+          [ngClass]="{'is-invalid': passwordCtrl.invalid && (passwordCtrl.dirty || passwordCtrl.touched)}"
+        />
+
+        <div class="invalid-feedback" *ngIf="passwordCtrl.errors && (passwordCtrl.dirty || passwordCtrl.touched)">
+          <span *ngIf="passwordCtrl.errors['required']">Password is required.</span>
+          <span *ngIf="passwordCtrl.errors['minlength']">Minimum 8 characters required.</span>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-primary w-100 mb-3"
+        type="submit"
+        [disabled]="loginForm.invalid || loading"
+      >
+        <span *ngIf="!loading">Sign In</span>
+        <span *ngIf="loading">
+          <span class="spinner-border spinner-border-sm me-1"></span>
+          Signing you in...
+        </span>
+      </button>
+
+      <p class="text-center mb-0 small">
+        Don’t have an account?
+        <a routerLink="/signup" class="link-primary">Create one</a>
+      </p>
+    </form>
+  </div>
+</div>

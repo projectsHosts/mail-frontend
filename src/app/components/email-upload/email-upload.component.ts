@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { EmailService } from '../../services/email.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-email-upload',
@@ -24,8 +25,27 @@ export class EmailUploadComponent {
   uploading = false;
   message = '';
   messageClass = '';
+  showTemplates = false;
 
-  constructor(private emailService: EmailService) {}
+    templates = [
+  {
+    title: 'Welcome Message',
+    text:
+      'Hello,\n\nWelcome to our service! We are excited to have you onboard.\n\nBest Regards,\nTeam'
+  },
+  {
+    title: 'Offer Email',
+    text:
+      'Hello,\n\nHere’s an exclusive offer just for you! Don’t miss out on this limited-time opportunity.\n\nThanks,\nTeam'
+  },
+  {
+    title: 'Follow-up Reminder',
+    text:
+      'Hi,\n\nJust following up on my previous email. Please let me know if you have any questions.\n\nRegards,\nTeam'
+  }
+];
+
+  constructor(private emailService: EmailService, private auth:AuthService ) {}
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
@@ -49,6 +69,16 @@ export class EmailUploadComponent {
     formData.append('subject', this.formData.subject);
     formData.append('body', this.formData.body);
     formData.append('delaySeconds', this.formData.delaySeconds.toString());
+
+    const userEmail = this.auth.getUserEmail(); 
+  if (userEmail) {
+  formData.append('getCreatedBy', userEmail);  
+} else {
+  // optional: handle case jab userEmail null ho
+  console.warn('User email not found, not sending getCreatedBy');
+}
+
+    // formData.append('getCreatedBy', this.auth.getUserEmail()?? '');
 
     this.emailService.uploadCampaign(formData).subscribe({
   next: (response: any) => {
@@ -100,6 +130,23 @@ export class EmailUploadComponent {
       delaySeconds: 2
     };
   }
+
+  // ⭐ star icon click -> show/hide dropdown
+  toggleTemplates(): void {
+    this.showTemplates = !this.showTemplates;
+  }
+
+  // ⭐ template click -> body fill
+  applyTemplate(template: { title: string; text: string }): void {
+    // pura replace:
+    this.formData.body = template.text;
+
+    // agar append karna ho:
+    // this.formData.body = (this.formData.body || '') + '\n\n' + template.text;
+
+    this.showTemplates = false;
+  }
+
 
 //   removeFile(): void {
 //   this.formData.file = null;
