@@ -88,7 +88,8 @@ export class CampaignListComponent implements OnChanges {
 
   sendCampaign(campaignId: number): void {
     this.sendingCampaignId = campaignId;
-    this.emailService.sendCampaign(campaignId).subscribe({
+    const email = this.auth.getUserEmail()|| "";
+    this.emailService.sendCampaign(campaignId,email).subscribe({
       next: (res: any) => {
         this.sendingCampaignId = null;
         Swal.fire('Success', res?.message || 'Campaign Started!', 'success');

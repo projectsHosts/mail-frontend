@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Campaign, Recipient, UploadRequest } from '../models/campaign.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Campaign, Recipient, UploadRequest } from '../models/campaign.model';
 export class EmailService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router:Router) { }
 
   // Upload Excel and create campaign
   uploadCampaign(formData: FormData): Observable<any> {
@@ -20,6 +21,7 @@ export class EmailService {
   getCampaigns(email: string): Observable<Campaign[]> {
   return this.http.get<Campaign[]>(`${this.apiUrl}/email/campaigns?email=${encodeURIComponent(email)}`);
 }
+
 
   // Get all campaigns
   // getCampaigns(email?: string): Observable<Campaign[]> {
@@ -42,7 +44,9 @@ export class EmailService {
 
   // Send campaign emails
   
-  sendCampaign(campaignId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/email/campaign/${campaignId}/send`, {});
+  sendCampaign(campaignId: number,fromEmail: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/email/campaign/${campaignId}/send`, {
+      fromEmail: fromEmail
+    });
   }
 }
