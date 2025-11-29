@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,9 @@ import { FormsModule, NgForm } from '@angular/forms';
   imports: [CommonModule, FormsModule,RouterLink]
 })
 export class LoginComponent {
+
+  private apiUrl = environment.apiUrl;
+
 
   email = '';
   password = '';
@@ -35,7 +39,7 @@ export class LoginComponent {
 
     this.loading = true;
 
-    this.http.post<any>("http://localhost:8080/api/auth/login", {
+    this.http.post<any>(`${this.apiUrl}/auth/login`, {
       email: this.email,
       password: this.password
     }).subscribe({

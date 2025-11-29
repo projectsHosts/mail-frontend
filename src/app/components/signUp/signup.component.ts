@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +14,8 @@ import Swal from 'sweetalert2';
   imports: [CommonModule, FormsModule,RouterLink]
 })
 export class SignupComponent {
-
+ 
+  private apiUrl = environment.apiUrl;
 
 successMessage = "";
 showSuccessToast = false;
@@ -47,7 +49,7 @@ signup(form: NgForm) {
 
   this.loading = true;
 
-  this.http.post<any>("http://localhost:8080/api/auth/signup", {
+  this.http.post<any>(`${this.apiUrl}/auth/signup`, {
     name: this.name,
     email: this.email,
     password: this.password
